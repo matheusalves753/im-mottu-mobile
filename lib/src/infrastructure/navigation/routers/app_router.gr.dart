@@ -16,9 +16,13 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     CharacterDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<CharacterDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CharacterDetailsPage(),
+        child: CharacterDetailsPage(
+          key: args.key,
+          character: args.character,
+        ),
       );
     },
     CharactersListRoute.name: (routeData) {
@@ -34,16 +38,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [CharacterDetailsPage]
-class CharacterDetailsRoute extends PageRouteInfo<void> {
-  const CharacterDetailsRoute({List<PageRouteInfo>? children})
-      : super(
+class CharacterDetailsRoute extends PageRouteInfo<CharacterDetailsRouteArgs> {
+  CharacterDetailsRoute({
+    Key? key,
+    required Character character,
+    List<PageRouteInfo>? children,
+  }) : super(
           CharacterDetailsRoute.name,
+          args: CharacterDetailsRouteArgs(
+            key: key,
+            character: character,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'CharacterDetailsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CharacterDetailsRouteArgs> page =
+      PageInfo<CharacterDetailsRouteArgs>(name);
+}
+
+class CharacterDetailsRouteArgs {
+  const CharacterDetailsRouteArgs({
+    this.key,
+    required this.character,
+  });
+
+  final Key? key;
+
+  final Character character;
+
+  @override
+  String toString() {
+    return 'CharacterDetailsRouteArgs{key: $key, character: $character}';
+  }
 }
 
 /// generated route for

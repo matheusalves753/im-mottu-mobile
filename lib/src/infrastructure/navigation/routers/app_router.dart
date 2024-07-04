@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:im_mottu_mobile/src/domain/entities/character.dart';
 
 import '../../../presentation/pages/character_details/character_details_page.dart';
 import '../../../presentation/pages/characters_list/characters_list_page.dart';
