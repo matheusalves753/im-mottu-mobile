@@ -1,35 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'character_data_wrapper_model.dart';
+part of 'comic_data_wrapper_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CharacterDataWrapperModelAdapter
-    extends TypeAdapter<CharacterDataWrapperModel> {
+class ComicDataWrapperModelAdapter extends TypeAdapter<ComicDataWrapperModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  CharacterDataWrapperModel read(BinaryReader reader) {
+  ComicDataWrapperModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CharacterDataWrapperModel(
+    return ComicDataWrapperModel(
       code: fields[0] as int?,
       status: fields[1] as String?,
       copyright: fields[2] as String?,
       attributionText: fields[3] as String?,
       attributionHTML: fields[4] as String?,
-      data: fields[5] as CharacterDataContainerModel?,
+      data: fields[5] as ComicDataContainerModel?,
       etag: fields[6] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CharacterDataWrapperModel obj) {
+  void write(BinaryWriter writer, ComicDataWrapperModel obj) {
     writer
       ..writeByte(7)
       ..writeByte(0)
@@ -54,7 +53,7 @@ class CharacterDataWrapperModelAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CharacterDataWrapperModelAdapter &&
+      other is ComicDataWrapperModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -63,9 +62,9 @@ class CharacterDataWrapperModelAdapter
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CharacterDataWrapperModelImpl _$$CharacterDataWrapperModelImplFromJson(
+_$ComicDataWrapperModelImpl _$$ComicDataWrapperModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$CharacterDataWrapperModelImpl(
+    _$ComicDataWrapperModelImpl(
       code: (json['code'] as num?)?.toInt(),
       status: json['status'] as String?,
       copyright: json['copyright'] as String?,
@@ -73,13 +72,13 @@ _$CharacterDataWrapperModelImpl _$$CharacterDataWrapperModelImplFromJson(
       attributionHTML: json['attributionHTML'] as String?,
       data: json['data'] == null
           ? null
-          : CharacterDataContainerModel.fromJson(
+          : ComicDataContainerModel.fromJson(
               json['data'] as Map<String, dynamic>),
       etag: json['etag'] as String?,
     );
 
-Map<String, dynamic> _$$CharacterDataWrapperModelImplToJson(
-        _$CharacterDataWrapperModelImpl instance) =>
+Map<String, dynamic> _$$ComicDataWrapperModelImplToJson(
+        _$ComicDataWrapperModelImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'status': instance.status,

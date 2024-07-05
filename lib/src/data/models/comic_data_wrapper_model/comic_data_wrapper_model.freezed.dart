@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'character_data_wrapper_model.dart';
+part of 'comic_data_wrapper_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CharacterDataWrapperModel _$CharacterDataWrapperModelFromJson(
+ComicDataWrapperModel _$ComicDataWrapperModelFromJson(
     Map<String, dynamic> json) {
-  return _CharacterDataWrapperModel.fromJson(json);
+  return _ComicDataWrapperModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CharacterDataWrapperModel {
+mixin _$ComicDataWrapperModel {
   @HiveField(0)
   int? get code => throw _privateConstructorUsedError;
   @HiveField(1)
@@ -32,21 +32,21 @@ mixin _$CharacterDataWrapperModel {
   @HiveField(4)
   String? get attributionHTML => throw _privateConstructorUsedError;
   @HiveField(5)
-  CharacterDataContainerModel? get data => throw _privateConstructorUsedError;
+  ComicDataContainerModel? get data => throw _privateConstructorUsedError;
   @HiveField(6)
   String? get etag => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CharacterDataWrapperModelCopyWith<CharacterDataWrapperModel> get copyWith =>
+  $ComicDataWrapperModelCopyWith<ComicDataWrapperModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CharacterDataWrapperModelCopyWith<$Res> {
-  factory $CharacterDataWrapperModelCopyWith(CharacterDataWrapperModel value,
-          $Res Function(CharacterDataWrapperModel) then) =
-      _$CharacterDataWrapperModelCopyWithImpl<$Res, CharacterDataWrapperModel>;
+abstract class $ComicDataWrapperModelCopyWith<$Res> {
+  factory $ComicDataWrapperModelCopyWith(ComicDataWrapperModel value,
+          $Res Function(ComicDataWrapperModel) then) =
+      _$ComicDataWrapperModelCopyWithImpl<$Res, ComicDataWrapperModel>;
   @useResult
   $Res call(
       {@HiveField(0) int? code,
@@ -54,17 +54,17 @@ abstract class $CharacterDataWrapperModelCopyWith<$Res> {
       @HiveField(2) String? copyright,
       @HiveField(3) String? attributionText,
       @HiveField(4) String? attributionHTML,
-      @HiveField(5) CharacterDataContainerModel? data,
+      @HiveField(5) ComicDataContainerModel? data,
       @HiveField(6) String? etag});
 
-  $CharacterDataContainerModelCopyWith<$Res>? get data;
+  $ComicDataContainerModelCopyWith<$Res>? get data;
 }
 
 /// @nodoc
-class _$CharacterDataWrapperModelCopyWithImpl<$Res,
-        $Val extends CharacterDataWrapperModel>
-    implements $CharacterDataWrapperModelCopyWith<$Res> {
-  _$CharacterDataWrapperModelCopyWithImpl(this._value, this._then);
+class _$ComicDataWrapperModelCopyWithImpl<$Res,
+        $Val extends ComicDataWrapperModel>
+    implements $ComicDataWrapperModelCopyWith<$Res> {
+  _$ComicDataWrapperModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -106,7 +106,7 @@ class _$CharacterDataWrapperModelCopyWithImpl<$Res,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CharacterDataContainerModel?,
+              as ComicDataContainerModel?,
       etag: freezed == etag
           ? _value.etag
           : etag // ignore: cast_nullable_to_non_nullable
@@ -116,24 +116,24 @@ class _$CharacterDataWrapperModelCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $CharacterDataContainerModelCopyWith<$Res>? get data {
+  $ComicDataContainerModelCopyWith<$Res>? get data {
     if (_value.data == null) {
       return null;
     }
 
-    return $CharacterDataContainerModelCopyWith<$Res>(_value.data!, (value) {
+    return $ComicDataContainerModelCopyWith<$Res>(_value.data!, (value) {
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$CharacterDataWrapperModelImplCopyWith<$Res>
-    implements $CharacterDataWrapperModelCopyWith<$Res> {
-  factory _$$CharacterDataWrapperModelImplCopyWith(
-          _$CharacterDataWrapperModelImpl value,
-          $Res Function(_$CharacterDataWrapperModelImpl) then) =
-      __$$CharacterDataWrapperModelImplCopyWithImpl<$Res>;
+abstract class _$$ComicDataWrapperModelImplCopyWith<$Res>
+    implements $ComicDataWrapperModelCopyWith<$Res> {
+  factory _$$ComicDataWrapperModelImplCopyWith(
+          _$ComicDataWrapperModelImpl value,
+          $Res Function(_$ComicDataWrapperModelImpl) then) =
+      __$$ComicDataWrapperModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -142,21 +142,20 @@ abstract class _$$CharacterDataWrapperModelImplCopyWith<$Res>
       @HiveField(2) String? copyright,
       @HiveField(3) String? attributionText,
       @HiveField(4) String? attributionHTML,
-      @HiveField(5) CharacterDataContainerModel? data,
+      @HiveField(5) ComicDataContainerModel? data,
       @HiveField(6) String? etag});
 
   @override
-  $CharacterDataContainerModelCopyWith<$Res>? get data;
+  $ComicDataContainerModelCopyWith<$Res>? get data;
 }
 
 /// @nodoc
-class __$$CharacterDataWrapperModelImplCopyWithImpl<$Res>
-    extends _$CharacterDataWrapperModelCopyWithImpl<$Res,
-        _$CharacterDataWrapperModelImpl>
-    implements _$$CharacterDataWrapperModelImplCopyWith<$Res> {
-  __$$CharacterDataWrapperModelImplCopyWithImpl(
-      _$CharacterDataWrapperModelImpl _value,
-      $Res Function(_$CharacterDataWrapperModelImpl) _then)
+class __$$ComicDataWrapperModelImplCopyWithImpl<$Res>
+    extends _$ComicDataWrapperModelCopyWithImpl<$Res,
+        _$ComicDataWrapperModelImpl>
+    implements _$$ComicDataWrapperModelImplCopyWith<$Res> {
+  __$$ComicDataWrapperModelImplCopyWithImpl(_$ComicDataWrapperModelImpl _value,
+      $Res Function(_$ComicDataWrapperModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -170,7 +169,7 @@ class __$$CharacterDataWrapperModelImplCopyWithImpl<$Res>
     Object? data = freezed,
     Object? etag = freezed,
   }) {
-    return _then(_$CharacterDataWrapperModelImpl(
+    return _then(_$ComicDataWrapperModelImpl(
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -194,7 +193,7 @@ class __$$CharacterDataWrapperModelImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CharacterDataContainerModel?,
+              as ComicDataContainerModel?,
       etag: freezed == etag
           ? _value.etag
           : etag // ignore: cast_nullable_to_non_nullable
@@ -205,8 +204,8 @@ class __$$CharacterDataWrapperModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CharacterDataWrapperModelImpl implements _CharacterDataWrapperModel {
-  const _$CharacterDataWrapperModelImpl(
+class _$ComicDataWrapperModelImpl implements _ComicDataWrapperModel {
+  const _$ComicDataWrapperModelImpl(
       {@HiveField(0) required this.code,
       @HiveField(1) required this.status,
       @HiveField(2) required this.copyright,
@@ -215,8 +214,8 @@ class _$CharacterDataWrapperModelImpl implements _CharacterDataWrapperModel {
       @HiveField(5) required this.data,
       @HiveField(6) required this.etag});
 
-  factory _$CharacterDataWrapperModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CharacterDataWrapperModelImplFromJson(json);
+  factory _$ComicDataWrapperModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ComicDataWrapperModelImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -235,21 +234,21 @@ class _$CharacterDataWrapperModelImpl implements _CharacterDataWrapperModel {
   final String? attributionHTML;
   @override
   @HiveField(5)
-  final CharacterDataContainerModel? data;
+  final ComicDataContainerModel? data;
   @override
   @HiveField(6)
   final String? etag;
 
   @override
   String toString() {
-    return 'CharacterDataWrapperModel(code: $code, status: $status, copyright: $copyright, attributionText: $attributionText, attributionHTML: $attributionHTML, data: $data, etag: $etag)';
+    return 'ComicDataWrapperModel(code: $code, status: $status, copyright: $copyright, attributionText: $attributionText, attributionHTML: $attributionHTML, data: $data, etag: $etag)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CharacterDataWrapperModelImpl &&
+            other is _$ComicDataWrapperModelImpl &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.copyright, copyright) ||
@@ -270,31 +269,30 @@ class _$CharacterDataWrapperModelImpl implements _CharacterDataWrapperModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CharacterDataWrapperModelImplCopyWith<_$CharacterDataWrapperModelImpl>
-      get copyWith => __$$CharacterDataWrapperModelImplCopyWithImpl<
-          _$CharacterDataWrapperModelImpl>(this, _$identity);
+  _$$ComicDataWrapperModelImplCopyWith<_$ComicDataWrapperModelImpl>
+      get copyWith => __$$ComicDataWrapperModelImplCopyWithImpl<
+          _$ComicDataWrapperModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CharacterDataWrapperModelImplToJson(
+    return _$$ComicDataWrapperModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CharacterDataWrapperModel implements CharacterDataWrapperModel {
-  const factory _CharacterDataWrapperModel(
-          {@HiveField(0) required final int? code,
-          @HiveField(1) required final String? status,
-          @HiveField(2) required final String? copyright,
-          @HiveField(3) required final String? attributionText,
-          @HiveField(4) required final String? attributionHTML,
-          @HiveField(5) required final CharacterDataContainerModel? data,
-          @HiveField(6) required final String? etag}) =
-      _$CharacterDataWrapperModelImpl;
+abstract class _ComicDataWrapperModel implements ComicDataWrapperModel {
+  const factory _ComicDataWrapperModel(
+      {@HiveField(0) required final int? code,
+      @HiveField(1) required final String? status,
+      @HiveField(2) required final String? copyright,
+      @HiveField(3) required final String? attributionText,
+      @HiveField(4) required final String? attributionHTML,
+      @HiveField(5) required final ComicDataContainerModel? data,
+      @HiveField(6) required final String? etag}) = _$ComicDataWrapperModelImpl;
 
-  factory _CharacterDataWrapperModel.fromJson(Map<String, dynamic> json) =
-      _$CharacterDataWrapperModelImpl.fromJson;
+  factory _ComicDataWrapperModel.fromJson(Map<String, dynamic> json) =
+      _$ComicDataWrapperModelImpl.fromJson;
 
   @override
   @HiveField(0)
@@ -313,12 +311,12 @@ abstract class _CharacterDataWrapperModel implements CharacterDataWrapperModel {
   String? get attributionHTML;
   @override
   @HiveField(5)
-  CharacterDataContainerModel? get data;
+  ComicDataContainerModel? get data;
   @override
   @HiveField(6)
   String? get etag;
   @override
   @JsonKey(ignore: true)
-  _$$CharacterDataWrapperModelImplCopyWith<_$CharacterDataWrapperModelImpl>
+  _$$ComicDataWrapperModelImplCopyWith<_$ComicDataWrapperModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

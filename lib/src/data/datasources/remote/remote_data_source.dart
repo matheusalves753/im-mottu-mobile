@@ -2,10 +2,30 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:im_mottu_mobile/src/data/models/character_data_container_model/character_data_container_model.dart';
 import 'package:im_mottu_mobile/src/data/models/character_data_wrapper_model/character_data_wrapper_model.dart';
+import 'package:im_mottu_mobile/src/data/models/character_model/character_model.dart';
+import 'package:im_mottu_mobile/src/data/models/comic_data_wrapper_model/comic_data_wrapper_model.dart';
+import 'package:im_mottu_mobile/src/data/models/enums/order_by_model.dart';
+import 'package:im_mottu_mobile/src/infrastructure/services/hive_service.dart';
 
 abstract interface class RemoteDataSource {
-  Future<CharacterDataWrapperModel> getCharacters({int offset, int limit});
+  Future<CharacterDataWrapperModel> getCharacters({
+    int offset,
+    int limit,
+    String? nameStartsWith,
+    OrderByModel? orderBy,
+  });
+
+  Future<CharacterDataWrapperModel> getCharactersByComic({
+    required int comicId,
+    int offset = 0,
+    int limit = 20,
+  });
+
+  Future<ComicDataWrapperModel> getComicsByCharacter(int characterId);
+
+  Future<CharacterDataWrapperModel> getRelatedCharacters(int characterId);
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -13,8 +33,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   final String _baseUrl = 'gateway.marvel.com';
   final String _publicKey = dotenv.env['MARVEL_PUBLIC_KEY']!;
   final String _privateKey = dotenv.env['MARVEL_PRIVATE_KEY']!;
+  final HiveService _cacheManager;
 
-  RemoteDataSourceImpl(this._client);
+  RemoteDataSourceImpl(this._client, this._cacheManager);
 
   Map<String, String> _generateAuthParams() {
     final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
@@ -40,24 +61,158 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<CharacterDataWrapperModel> getCharacters({
     int offset = 0,
     int limit = 20,
+    String? nameStartsWith,
+    OrderByModel? orderBy,
   }) async {
-    final uri = _buildUrl('/v1/public/characters', {
+    final cacheBox = await _cacheManager.getBox('charactersBox');
+
+    final cacheKey =
+        'characters_${offset}_$limit${nameStartsWith ?? ''}_${orderBy?.name ?? ''}';
+
+    if (cacheBox.containsKey(cacheKey)) {
+      final cachedData = cacheBox.get(cacheKey) as String;
+      final Map<String, dynamic> jsonMap = json.decode(cachedData);
+      return CharacterDataWrapperModel.fromJson(jsonMap);
+    }
+
+    final queryParams = {
       'offset': offset.toString(),
       'limit': limit.toString(),
-    });
+    };
+
+    if (nameStartsWith != null) {
+      queryParams['nameStartsWith'] = nameStartsWith;
+    }
+
+    if (orderBy != null) {
+      queryParams['orderBy'] = orderBy.toJson();
+    }
+
+    final uri = _buildUrl('/v1/public/characters', queryParams);
 
     try {
       final response = await _client.get(uri);
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> jsonMap = json.decode(response.body);
-        final data = CharacterDataWrapperModel.fromJson(jsonMap);
-        return data;
+        final responseBody = response.body;
+        cacheBox.put(cacheKey, responseBody);
+
+        final Map<String, dynamic> jsonMap = json.decode(responseBody);
+        return CharacterDataWrapperModel.fromJson(jsonMap);
       } else {
         throw Exception('Failed to load characters');
       }
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<CharacterDataWrapperModel> getCharactersByComic({
+    required int comicId,
+    int offset = 0,
+    int limit = 3,
+  }) async {
+    final cacheBox = await _cacheManager.getBox('charactersByComicBox');
+
+    final cacheKey = 'charactersByComic_${comicId}_${offset}_$limit';
+
+    if (cacheBox.containsKey(cacheKey)) {
+      final cachedData = cacheBox.get(cacheKey) as String;
+      final Map<String, dynamic> jsonMap = json.decode(cachedData);
+      return CharacterDataWrapperModel.fromJson(jsonMap);
+    }
+
+    final queryParams = {
+      'offset': offset.toString(),
+      'limit': limit.toString(),
+    };
+
+    final uri = _buildUrl('/v1/public/comics/$comicId/characters', queryParams);
+
+    try {
+      final response = await _client.get(uri);
+
+      if (response.statusCode == 200) {
+        final responseBody = response.body;
+        cacheBox.put(cacheKey, responseBody);
+
+        final Map<String, dynamic> jsonMap = json.decode(responseBody);
+        return CharacterDataWrapperModel.fromJson(jsonMap);
+      } else {
+        throw Exception('Failed to load characters by comic');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ComicDataWrapperModel> getComicsByCharacter(int characterId) async {
+    final cacheBox = await _cacheManager.getBox('comicsByCharacterBox');
+
+    final cacheKey = 'comicsByCharacter_$characterId';
+
+    if (cacheBox.containsKey(cacheKey)) {
+      final cachedData = cacheBox.get(cacheKey) as String;
+      final Map<String, dynamic> jsonMap = json.decode(cachedData);
+      return ComicDataWrapperModel.fromJson(jsonMap);
+    }
+
+    final queryParams = {
+      'limit': '4',
+    };
+
+    final uri =
+        _buildUrl('/v1/public/characters/$characterId/comics', queryParams);
+
+    try {
+      final response = await _client.get(uri);
+
+      if (response.statusCode == 200) {
+        final responseBody = response.body;
+        cacheBox.put(cacheKey, responseBody);
+
+        final Map<String, dynamic> jsonMap = json.decode(responseBody);
+        return ComicDataWrapperModel.fromJson(jsonMap);
+      } else {
+        throw Exception('Failed to load comics for character $characterId');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CharacterDataWrapperModel> getRelatedCharacters(
+      int characterId) async {
+    final comicWrapper = await getComicsByCharacter(characterId);
+    final List<int> comicIds =
+        comicWrapper.data?.results?.map((comic) => comic.id!).toList() ?? [];
+    final List<CharacterModel> allRelatedCharacters = [];
+
+    for (int comicId in comicIds) {
+      final charactersWrapper = await getCharactersByComic(comicId: comicId);
+      final List<CharacterModel>? characters = charactersWrapper.data?.results;
+      if (characters != null) {
+        allRelatedCharacters.addAll(characters);
+      }
+    }
+
+    return CharacterDataWrapperModel(
+      code: 200,
+      status: 'Success',
+      copyright: comicWrapper.copyright,
+      attributionText: comicWrapper.attributionText,
+      attributionHTML: comicWrapper.attributionHTML,
+      data: CharacterDataContainerModel(
+        offset: 0,
+        limit: allRelatedCharacters.length,
+        total: allRelatedCharacters.length,
+        count: allRelatedCharacters.length,
+        results: allRelatedCharacters,
+      ),
+      etag: comicWrapper.etag,
+    );
   }
 }
