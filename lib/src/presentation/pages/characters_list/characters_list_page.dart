@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:im_mottu_mobile/src/infrastructure/navigation/routers/app_router.dart';
 import '../../../../locator.dart';
 import 'state/state.dart';
-import 'widgets/character_card_widget.dart';
+import '../../widgets/character_card_widget.dart';
 import 'widgets/search_bar.dart';
 import 'widgets/order_by_dropdown.dart';
 
