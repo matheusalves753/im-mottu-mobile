@@ -38,7 +38,12 @@ class CharacterCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: isPlaceholder
-                    ? Image.asset('assets/images/logo.png')
+                    ? Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      )
                     : FadeInImage.assetNetwork(
                         placeholder: 'assets/images/logo.png',
                         image:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:im_mottu_mobile/src/infrastructure/navigation/routers/app_router.dart';
-import 'package:im_mottu_mobile/src/presentation/pages/characters_list/widgets/character_card_widget.dart';
+import 'package:im_mottu_mobile/src/presentation/widgets/character_card_widget.dart';
 import 'package:im_mottu_mobile/src/presentation/pages/character_details/state/state.dart';
 import 'package:auto_route/auto_route.dart';
 
