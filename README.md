@@ -38,9 +38,9 @@
 
 # ⏳ NÍVEL 3 - nome da branch (level_3):
 - ✔️ Executar etapas iniciais;
-- ⏳ Criar uma Splashscreen customizada;
+- ✔️ Criar uma Splashscreen customizada;
 - ✔️ Guardar em cache as consultas realizadas na API Marvel;
-- ⏳ Limpar cache de consultas no fechamento do APP;
+- ✔️ Limpar cache de consultas no fechamento do APP;
 - ✔️ Mostrar a listagem dos personagens (imagem e nome);
 - ✔️ Criar um filtro para a listagem;
 - ⏳ Ciar uma paginação da listagem;

@@ -5,6 +5,11 @@ const kPrimaryColor = Colors.red;
 final ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
   useMaterial3: true,
+  scaffoldBackgroundColor: const Color(0xFFF0F0F0),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xFFE0E0E0),
+    foregroundColor: Colors.black,
+  ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
     bodyMedium: TextStyle(color: Colors.black87),
@@ -23,9 +28,9 @@ final ThemeData darkTheme = ThemeData(
     seedColor: kPrimaryColor,
     brightness: Brightness.dark,
   ),
-  scaffoldBackgroundColor: Colors.black,
+  scaffoldBackgroundColor: const Color(0xFF121212),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.black,
+    backgroundColor: Color(0xFF1E1E1E),
     foregroundColor: Colors.white,
   ),
   textTheme: const TextTheme(

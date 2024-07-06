@@ -23,6 +23,7 @@ class CharactersListPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: Image.asset('assets/images/logo.png', height: 30.0),
       ),
       body: SafeArea(
