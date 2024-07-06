@@ -10,6 +10,7 @@ class CharactersListPageState with _$CharactersListPageState {
     required List<Character> characters,
     String? nameStartsWith,
     @Default(OrderBy.name) OrderBy orderBy,
+    @Default(false) bool isLoadingMore,
   }) = CharactersListPageDataState;
 
   const factory CharactersListPageState.loading() =

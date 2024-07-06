@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CharactersListPageState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Character> characters, String? nameStartsWith, OrderBy orderBy)
+    required TResult Function(List<Character> characters,
+            String? nameStartsWith, OrderBy orderBy, bool isLoadingMore)
         data,
     required TResult Function() loading,
     required TResult Function() error,
@@ -28,7 +28,7 @@ mixin _$CharactersListPageState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult? Function()? loading,
     TResult? Function()? error,
@@ -37,7 +37,7 @@ mixin _$CharactersListPageState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult Function()? loading,
     TResult Function()? error,
@@ -95,7 +95,10 @@ abstract class _$$CharactersListPageDataStateImplCopyWith<$Res> {
       __$$CharactersListPageDataStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<Character> characters, String? nameStartsWith, OrderBy orderBy});
+      {List<Character> characters,
+      String? nameStartsWith,
+      OrderBy orderBy,
+      bool isLoadingMore});
 }
 
 /// @nodoc
@@ -114,6 +117,7 @@ class __$$CharactersListPageDataStateImplCopyWithImpl<$Res>
     Object? characters = null,
     Object? nameStartsWith = freezed,
     Object? orderBy = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_$CharactersListPageDataStateImpl(
       characters: null == characters
@@ -128,6 +132,10 @@ class __$$CharactersListPageDataStateImplCopyWithImpl<$Res>
           ? _value.orderBy
           : orderBy // ignore: cast_nullable_to_non_nullable
               as OrderBy,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -138,7 +146,8 @@ class _$CharactersListPageDataStateImpl implements CharactersListPageDataState {
   const _$CharactersListPageDataStateImpl(
       {required final List<Character> characters,
       this.nameStartsWith,
-      this.orderBy = OrderBy.name})
+      this.orderBy = OrderBy.name,
+      this.isLoadingMore = false})
       : _characters = characters;
 
   final List<Character> _characters;
@@ -154,10 +163,13 @@ class _$CharactersListPageDataStateImpl implements CharactersListPageDataState {
   @override
   @JsonKey()
   final OrderBy orderBy;
+  @override
+  @JsonKey()
+  final bool isLoadingMore;
 
   @override
   String toString() {
-    return 'CharactersListPageState.data(characters: $characters, nameStartsWith: $nameStartsWith, orderBy: $orderBy)';
+    return 'CharactersListPageState.data(characters: $characters, nameStartsWith: $nameStartsWith, orderBy: $orderBy, isLoadingMore: $isLoadingMore)';
   }
 
   @override
@@ -169,7 +181,9 @@ class _$CharactersListPageDataStateImpl implements CharactersListPageDataState {
                 .equals(other._characters, _characters) &&
             (identical(other.nameStartsWith, nameStartsWith) ||
                 other.nameStartsWith == nameStartsWith) &&
-            (identical(other.orderBy, orderBy) || other.orderBy == orderBy));
+            (identical(other.orderBy, orderBy) || other.orderBy == orderBy) &&
+            (identical(other.isLoadingMore, isLoadingMore) ||
+                other.isLoadingMore == isLoadingMore));
   }
 
   @override
@@ -177,7 +191,8 @@ class _$CharactersListPageDataStateImpl implements CharactersListPageDataState {
       runtimeType,
       const DeepCollectionEquality().hash(_characters),
       nameStartsWith,
-      orderBy);
+      orderBy,
+      isLoadingMore);
 
   @JsonKey(ignore: true)
   @override
@@ -189,39 +204,39 @@ class _$CharactersListPageDataStateImpl implements CharactersListPageDataState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Character> characters, String? nameStartsWith, OrderBy orderBy)
+    required TResult Function(List<Character> characters,
+            String? nameStartsWith, OrderBy orderBy, bool isLoadingMore)
         data,
     required TResult Function() loading,
     required TResult Function() error,
   }) {
-    return data(characters, nameStartsWith, orderBy);
+    return data(characters, nameStartsWith, orderBy, isLoadingMore);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult? Function()? loading,
     TResult? Function()? error,
   }) {
-    return data?.call(characters, nameStartsWith, orderBy);
+    return data?.call(characters, nameStartsWith, orderBy, isLoadingMore);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult Function()? loading,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(characters, nameStartsWith, orderBy);
+      return data(characters, nameStartsWith, orderBy, isLoadingMore);
     }
     return orElse();
   }
@@ -265,11 +280,13 @@ abstract class CharactersListPageDataState implements CharactersListPageState {
   const factory CharactersListPageDataState(
       {required final List<Character> characters,
       final String? nameStartsWith,
-      final OrderBy orderBy}) = _$CharactersListPageDataStateImpl;
+      final OrderBy orderBy,
+      final bool isLoadingMore}) = _$CharactersListPageDataStateImpl;
 
   List<Character> get characters;
   String? get nameStartsWith;
   OrderBy get orderBy;
+  bool get isLoadingMore;
   @JsonKey(ignore: true)
   _$$CharactersListPageDataStateImplCopyWith<_$CharactersListPageDataStateImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -318,8 +335,8 @@ class _$CharactersListPageLoadingStateImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Character> characters, String? nameStartsWith, OrderBy orderBy)
+    required TResult Function(List<Character> characters,
+            String? nameStartsWith, OrderBy orderBy, bool isLoadingMore)
         data,
     required TResult Function() loading,
     required TResult Function() error,
@@ -331,7 +348,7 @@ class _$CharactersListPageLoadingStateImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult? Function()? loading,
     TResult? Function()? error,
@@ -343,7 +360,7 @@ class _$CharactersListPageLoadingStateImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult Function()? loading,
     TResult Function()? error,
@@ -439,8 +456,8 @@ class _$CharactersListPageErrorStateImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Character> characters, String? nameStartsWith, OrderBy orderBy)
+    required TResult Function(List<Character> characters,
+            String? nameStartsWith, OrderBy orderBy, bool isLoadingMore)
         data,
     required TResult Function() loading,
     required TResult Function() error,
@@ -452,7 +469,7 @@ class _$CharactersListPageErrorStateImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult? Function()? loading,
     TResult? Function()? error,
@@ -464,7 +481,7 @@ class _$CharactersListPageErrorStateImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Character> characters, String? nameStartsWith,
-            OrderBy orderBy)?
+            OrderBy orderBy, bool isLoadingMore)?
         data,
     TResult Function()? loading,
     TResult Function()? error,

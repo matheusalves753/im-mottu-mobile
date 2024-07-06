@@ -14,20 +14,39 @@ class CharactersListPageViewModel extends Cubit<CharactersListPageState> {
     int limit = 20,
     String? nameStartsWith,
     OrderBy orderBy = OrderBy.name,
+    bool isLoadMore = false,
   }) async {
     try {
-      emit(const CharactersListPageState.loading());
+      if (isLoadMore) {
+        emit(
+          (state as CharactersListPageDataState).copyWith(
+            isLoadingMore: true,
+          ),
+        );
+      } else {
+        emit(const CharactersListPageState.loading());
+      }
+
       final data = await _getCharactersUseCase(
         offset: offset,
         limit: limit,
         nameStartsWith: nameStartsWith,
         orderBy: orderBy,
       );
-      emit(CharactersListPageState.data(
-        characters: data,
-        nameStartsWith: nameStartsWith,
-        orderBy: orderBy,
-      ));
+
+      if (isLoadMore) {
+        final currentState = state as CharactersListPageDataState;
+        emit(currentState.copyWith(
+          characters: currentState.characters + data,
+          isLoadingMore: false,
+        ));
+      } else {
+        emit(CharactersListPageState.data(
+          characters: data,
+          nameStartsWith: nameStartsWith,
+          orderBy: orderBy,
+        ));
+      }
     } catch (e) {
       emit(const CharactersListPageState.error());
     }
@@ -49,6 +68,20 @@ class CharactersListPageViewModel extends Cubit<CharactersListPageState> {
       loadData(
         nameStartsWith: currentState.nameStartsWith,
         orderBy: orderBy,
+      );
+    }
+  }
+
+  void loadMore() {
+    final currentState = state;
+    if (currentState is CharactersListPageDataState &&
+        !currentState.isLoadingMore) {
+      loadData(
+        offset: currentState.characters.length,
+        limit: 20,
+        nameStartsWith: currentState.nameStartsWith,
+        orderBy: currentState.orderBy,
+        isLoadMore: true,
       );
     }
   }

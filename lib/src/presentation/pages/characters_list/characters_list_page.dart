@@ -12,8 +12,18 @@ import 'widgets/order_by_dropdown.dart';
 @RoutePage()
 class CharactersListPage extends StatelessWidget {
   final _viewModel = locator<CharactersListPageViewModel>();
+  final ScrollController _scrollController = ScrollController();
 
-  CharactersListPage({super.key});
+  CharactersListPage({super.key}) {
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge) {
+        bool isBottom = _scrollController.position.pixels != 0;
+        if (isBottom) {
+          _viewModel.loadMore();
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +66,7 @@ class CharactersListPage extends StatelessWidget {
                       return RefreshIndicator(
                         onRefresh: () => _viewModel.loadData(),
                         child: GridView.builder(
+                          controller: _scrollController,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -63,15 +74,25 @@ class CharactersListPage extends StatelessWidget {
                             mainAxisSpacing: 8.0,
                             childAspectRatio: 0.75,
                           ),
-                          itemCount: state.characters.length,
-                          itemBuilder: (context, index) => CharacterCard(
-                            character: state.characters[index],
-                            onTap: () => context.router.push(
-                              CharacterDetailsRoute(
+                          itemCount: state.isLoadingMore
+                              ? state.characters.length + 1
+                              : state.characters.length,
+                          itemBuilder: (context, index) {
+                            if (index >= state.characters.length) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return CharacterCard(
                                 character: state.characters[index],
-                              ),
-                            ),
-                          ),
+                                onTap: () => context.router.push(
+                                  CharacterDetailsRoute(
+                                    character: state.characters[index],
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                       );
                     } else if (state is CharactersListPageErrorState) {
