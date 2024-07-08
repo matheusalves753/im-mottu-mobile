@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:im_mottu_mobile/src/infrastructure/navigation/routers/app_router.dart';
+import 'package:get/get.dart';
+import 'package:im_mottu_mobile/src/infrastructure/navigation/navigation.dart';
+import 'package:im_mottu_mobile/src/presentation/pages/character_details/character_details_page_controller.dart';
 import 'package:im_mottu_mobile/src/presentation/widgets/character_card_widget.dart';
-import 'package:im_mottu_mobile/src/presentation/pages/character_details/state/state.dart';
-import 'package:auto_route/auto_route.dart';
 
 class RelatedCharactersWidget extends StatelessWidget {
-  final CharacterDetailsPageViewModel viewModel;
+  final CharacterDetailsPageController controller;
 
-  const RelatedCharactersWidget({super.key, required this.viewModel});
+  const RelatedCharactersWidget({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -23,50 +22,49 @@ class RelatedCharactersWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        BlocBuilder<CharacterDetailsPageViewModel, CharacterDetailsPageState>(
-          bloc: viewModel,
-          builder: (context, state) {
-            if (state is CharacterDetailsPageLoadingState) {
-              return SizedBox(
-                height: 200.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: CharacterCard.placeholder(),
-                    );
-                  },
-                ),
-              );
-            } else if (state is CharacterDetailsPageDataState) {
-              return SizedBox(
-                height: 200.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.relatedCharacters.length,
-                  itemBuilder: (context, index) {
-                    final relatedCharacter = state.relatedCharacters[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: CharacterCard(
-                        character: relatedCharacter,
-                        onTap: () => context.router.push(
-                          CharacterDetailsRoute(character: relatedCharacter),
-                        ),
+        Obx(() {
+          if (controller.isLoading.value) {
+            return SizedBox(
+              height: 200.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: CharacterCard.placeholder(),
+                  );
+                },
+              ),
+            );
+          } else if (controller.relatedCharacters.isNotEmpty) {
+            return SizedBox(
+              height: 200.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.relatedCharacters.length,
+                itemBuilder: (context, index) {
+                  final relatedCharacter = controller.relatedCharacters[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: CharacterCard(
+                      character: relatedCharacter,
+                      onTap: () => Get.toNamed(
+                        AppRoutes.characterDetails,
+                        arguments: relatedCharacter,
+                        preventDuplicates: false,
                       ),
-                    );
-                  },
-                ),
-              );
-            } else if (state is CharacterDetailsPageErrorState) {
-              return const Text('Failed to load related characters');
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else if (controller.hasError.value) {
+            return const Text('Failed to load related characters');
+          } else {
+            return const SizedBox();
+          }
+        }),
       ],
     );
   }
