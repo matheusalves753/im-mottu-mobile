@@ -74,9 +74,9 @@ class CharactersListPageController extends GetxController {
     });
   }
 
-  void setOrderBy(OrderBy order) {
+  Future<void> setOrderBy(OrderBy order) async {
     orderBy.value = order;
-    loadData();
+    await loadData();
   }
 
   void loadMore() {

@@ -12,7 +12,7 @@ class CharacterDetailsPageController extends GetxController {
   var isLoading = false.obs;
   var hasError = false.obs;
 
-  void loadCharacterDetails(Character character) async {
+  Future<void> loadCharacterDetails(Character character) async {
     try {
       isLoading.value = true;
       this.character.value = character;

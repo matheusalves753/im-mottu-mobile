@@ -20,7 +20,32 @@
 >- Seja criativo(a) na sua implementação.
 >- Não faça **Ctrl+C / Ctrl+V** de outro repositório !!!
 
+# ⚠️ Configuração do Ambiente
 
+Para rodar este aplicativo, é necessário configurar um arquivo `.env` na raiz do projeto com as chaves da API da Marvel. Siga as instruções abaixo para configurar o ambiente:
+
+1. Crie um arquivo chamado `.env` na raiz do projeto.
+2. Adicione as seguintes linhas ao arquivo `.env` com suas chaves da API da Marvel:
+
+   ```plaintext
+   MARVEL_PUBLIC_KEY=<SUA_MARVEL_PUBLIC_KEY>
+   MARVEL_PRIVATE_KEY=<SUA_MARVEL_PRIVATE_KEY>
+
+## Rodando o aplicativo
+
+Para rodar este aplicativo, é necessário configurar um arquivo `.env` na raiz do projeto com as chaves da API da Marvel. Siga as instruções abaixo para configurar o ambiente:
+
+1. Instale as dependências do projeto:
+   ```sh
+   flutter pub get
+1. Execute o aplicativo:
+   ```sh
+   flutter run
+
+## Rodando os testes
+1. Execute o comando:    
+    ```sh
+    flutter test
 
 # ✔️ NÍVEL 1 - nome da branch (level_1):
 - ✔️ Executar etapas iniciais;
@@ -53,5 +78,6 @@
 - ✔️ Utilizar Getx.
 - ✔️ Configurar Firebase crashlytics.
 - ✔️ Criar channel em kotlin, capturar a mudança de conexão, e mostrar uma mensagem de offline no flutter.
+
 
 ![Evidência Crashlytics](./crashlytics.png "Evidência Crashlytics")
