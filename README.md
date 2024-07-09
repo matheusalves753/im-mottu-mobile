@@ -33,15 +33,14 @@ Para rodar este aplicativo, é necessário configurar um arquivo `.env` na raiz 
 
 ## Rodando o aplicativo
 
-Para rodar este aplicativo, é necessário configurar um arquivo `.env` na raiz do projeto com as chaves da API da Marvel. Siga as instruções abaixo para configurar o ambiente:
-
 1. Instale as dependências do projeto:
+   
    ```sh
    flutter pub get
 1. Execute o aplicativo:
+   
    ```sh
    flutter run
-
 ## Rodando os testes
 1. Execute o comando:    
     ```sh
