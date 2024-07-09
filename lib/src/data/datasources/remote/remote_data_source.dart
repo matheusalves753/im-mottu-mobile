@@ -7,6 +7,8 @@ import 'package:im_mottu_mobile/src/data/models/character_data_wrapper_model/cha
 import 'package:im_mottu_mobile/src/data/models/character_model/character_model.dart';
 import 'package:im_mottu_mobile/src/data/models/comic_data_wrapper_model/comic_data_wrapper_model.dart';
 import 'package:im_mottu_mobile/src/data/models/enums/order_by_model.dart';
+import 'package:im_mottu_mobile/src/infrastructure/exceptions/marvel_api_conflict_exception.dart';
+import 'package:im_mottu_mobile/src/infrastructure/exceptions/marvel_api_exception.dart';
 import 'package:im_mottu_mobile/src/infrastructure/services/hive_service.dart';
 
 abstract interface class RemoteDataSource {
@@ -80,7 +82,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       'limit': limit.toString(),
     };
 
-    if (nameStartsWith != null) {
+    if (nameStartsWith != null && nameStartsWith.isEmpty == false) {
       queryParams['nameStartsWith'] = nameStartsWith;
     }
 
@@ -100,6 +102,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final Map<String, dynamic> jsonMap = json.decode(responseBody);
         return CharacterDataWrapperModel.fromJson(jsonMap);
       } else {
+        _handleErrorResponse(response);
         throw Exception('Failed to load characters');
       }
     } catch (e) {
@@ -140,6 +143,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final Map<String, dynamic> jsonMap = json.decode(responseBody);
         return CharacterDataWrapperModel.fromJson(jsonMap);
       } else {
+        _handleErrorResponse(response);
         throw Exception('Failed to load characters by comic');
       }
     } catch (e) {
@@ -176,6 +180,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final Map<String, dynamic> jsonMap = json.decode(responseBody);
         return ComicDataWrapperModel.fromJson(jsonMap);
       } else {
+        _handleErrorResponse(response);
         throw Exception('Failed to load comics for character $characterId');
       }
     } catch (e) {
@@ -214,5 +219,32 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       ),
       etag: comicWrapper.etag,
     );
+  }
+
+  void _handleErrorResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 401:
+        throw MarvelApiException('Unauthorized: Invalid or missing API key.',
+            code: response.statusCode);
+      case 403:
+        throw MarvelApiException('Forbidden: Access denied.',
+            code: response.statusCode);
+      case 404:
+        throw MarvelApiException(
+            'Not Found: The requested resource was not found.',
+            code: response.statusCode);
+      case 409:
+        final Map<String, dynamic> errorResponse = json.decode(response.body);
+        final errorMessage = errorResponse['status'] ??
+            'Conflict: There was a problem with the request.';
+        throw MarvelApiConflictException(errorMessage);
+      case 500:
+        throw MarvelApiException(
+            'Internal Server Error: Please try again later.',
+            code: response.statusCode);
+      default:
+        throw MarvelApiException('Unknown error occurred.',
+            code: response.statusCode);
+    }
   }
 }

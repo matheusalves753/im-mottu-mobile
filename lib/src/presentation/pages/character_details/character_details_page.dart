@@ -1,24 +1,21 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart' hide SearchBar;
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 import 'package:im_mottu_mobile/src/domain/entities/character.dart';
-import '../../../../locator.dart';
-import 'state/state.dart';
-import 'widgets/character_image_widget.dart';
-import 'widgets/character_details_widget.dart';
-import 'widgets/related_characters_widget.dart';
+import 'package:im_mottu_mobile/src/presentation/pages/character_details/character_details_page_controller.dart';
+import 'widgets/widgets.dart';
 
-@RoutePage()
 class CharacterDetailsPage extends StatelessWidget {
   final Character character;
-  final _viewModel = locator<CharacterDetailsPageViewModel>();
+  final CharacterDetailsPageController _controller =
+      Get.find<CharacterDetailsPageController>();
 
   CharacterDetailsPage({super.key, required this.character});
 
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _viewModel.loadCharacterDetails(character);
+      _controller.loadCharacterDetails(character);
     });
 
     return Scaffold(
@@ -36,7 +33,7 @@ class CharacterDetailsPage extends StatelessWidget {
                 const SizedBox(height: 16.0),
                 CharacterDetailsWidget(character: character),
                 const SizedBox(height: 16.0),
-                RelatedCharactersWidget(viewModel: _viewModel),
+                RelatedCharactersWidget(controller: _controller),
               ],
             ),
           ),

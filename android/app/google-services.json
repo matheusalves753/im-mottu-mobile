@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "885022132625",
+    "project_id": "immottumobile",
+    "storage_bucket": "immottumobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885022132625:android:a30b07ca93b97cc897f230",
+        "android_client_info": {
+          "package_name": "com.mottu.marvel.im_mottu_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrIWd4XlYhTpzAyaCpg28QWBmmf36cFWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

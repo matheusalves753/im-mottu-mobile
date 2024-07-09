@@ -11,7 +11,7 @@ class HiveService {
 
   final Map<String, Box> _openBoxes = {};
 
-  static setupHive() async {
+  static Future<void> setupHive() async {
     await Hive.initFlutter();
   }
 
@@ -34,5 +34,11 @@ class HiveService {
       await box.close();
     }
     _openBoxes.clear();
+  }
+
+  Future<void> clearAllBoxes() async {
+    for (var box in _openBoxes.values) {
+      await box.clear();
+    }
   }
 }
