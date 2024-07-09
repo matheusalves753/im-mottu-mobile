@@ -49,7 +49,9 @@
 
 > Ao final de cada etapa, criar PR para a branch **main** e realizar o merge.
 
-# ⏳ Pontos extras (opcional):
+# ✔️ Pontos extras (opcional):
 - ✔️ Utilizar Getx.
-- ⏳ Configurar Firebase crashlytics.
-- ⏳ Criar channel em kotlin, capturar a mudança de conexão, e mostrar uma mensagem de offline no flutter.
+- ✔️ Configurar Firebase crashlytics.
+- ✔️ Criar channel em kotlin, capturar a mudança de conexão, e mostrar uma mensagem de offline no flutter.
+
+![Evidência Crashlytics](./crashlytics.png "Evidência Crashlytics")

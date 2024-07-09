@@ -19,6 +19,7 @@ class CharactersListPage extends StatelessWidget {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Image.asset('assets/images/logo.png', height: 30.0),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
