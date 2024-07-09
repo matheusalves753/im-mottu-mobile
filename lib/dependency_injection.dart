@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:im_mottu_mobile/src/infrastructure/services/hive_service.dart';
+import 'package:im_mottu_mobile/src/infrastructure/infrastructure.dart';
 import 'src/data/data.dart';
 import 'src/domain/domain.dart';
 import 'src/presentation/presentation.dart';
@@ -17,6 +17,10 @@ class DependencyInjection {
   static void _setupServices() {
     Get.put<HiveService>(
       HiveService(),
+      permanent: true,
+    );
+    Get.put<NetworkService>(
+      NetworkService(),
       permanent: true,
     );
   }

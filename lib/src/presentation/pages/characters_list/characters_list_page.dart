@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:get/get.dart';
+import 'package:im_mottu_mobile/src/domain/entities/network_status.dart';
 import 'package:im_mottu_mobile/src/infrastructure/navigation/routers/app_routes.dart';
+import 'package:im_mottu_mobile/src/infrastructure/services/network_service.dart';
 import '../../widgets/character_card_widget.dart';
 import 'characters_list_page_controller.dart';
 import 'widgets/widgets.dart';
@@ -28,6 +30,18 @@ class CharactersListPage extends StatelessWidget {
                 onOrderByChanged: (orderBy) => _controller.setOrderBy(orderBy),
               );
             }),
+            Obx(
+              () {
+                final NetworkService networkService =
+                    Get.find<NetworkService>();
+                return networkService.networkStatus ==
+                        NetworkStatus.disconnected
+                    ? const Text(
+                        'You are offline',
+                      )
+                    : const SizedBox.shrink();
+              },
+            ),
             Expanded(
               child: Center(
                 child: Obx(() {

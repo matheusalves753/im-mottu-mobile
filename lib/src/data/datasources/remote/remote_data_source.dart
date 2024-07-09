@@ -82,7 +82,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       'limit': limit.toString(),
     };
 
-    if (nameStartsWith != null) {
+    if (nameStartsWith != null && nameStartsWith.isEmpty == false) {
       queryParams['nameStartsWith'] = nameStartsWith;
     }
 

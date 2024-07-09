@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_mottu_mobile/src/domain/entities/character.dart';
@@ -6,6 +7,7 @@ import 'package:im_mottu_mobile/src/domain/usecases/get_characters_use_case.dart
 
 class CharactersListPageController extends GetxController {
   final GetCharactersUseCase _getCharactersUseCase;
+  Timer? _debounce;
 
   CharactersListPageController(this._getCharactersUseCase);
 
@@ -32,6 +34,7 @@ class CharactersListPageController extends GetxController {
   @override
   void onClose() {
     scrollController.dispose();
+    _debounce?.cancel();
     super.onClose();
   }
 
@@ -64,8 +67,11 @@ class CharactersListPageController extends GetxController {
   }
 
   void setSearchTerm(String term) {
-    nameStartsWith.value = term;
-    loadData();
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1000), () {
+      nameStartsWith.value = term;
+      loadData();
+    });
   }
 
   void setOrderBy(OrderBy order) {
